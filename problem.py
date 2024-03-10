@@ -56,31 +56,28 @@ def _get_data(path=".", split="train"):
     # X: array-like (features)
     # y: array-like (labels)
 
-    # Load data from CSV file
-    data = pd.read_csv(os.path.join(path, split, "_classes.csv"))
-    
-    # Extract features and labels
-    X = data['filename']  # Adjust 'filename' with your feature column name
-    y = data.drop(columns=['filename'])  # Adjust column names as needed
+    # data
+    X = np.load(os.path.join(path, "data", "X_" + split + ".npy"))
+
+    # labels
+    y = pd.read_csv(os.path.join(path, "data", "y_" + split + ".csv"))
 
     return X, y
 
 def get_train_data(path="."):
     # Load y_df from the training CSV file
-    y_df = pd.read_csv(os.path.join(path, "train", "_classes.csv"))
-    
-    # You can further preprocess your labels or extract additional features here if needed
-    
     # Return data
+    y_df = pd.read_csv(os.path.join(path, "data/y_train.csv"))
+    
+    # Global variable groups
+    global groups
+    groups = y_df.to_numpy().ravel()
+
     return _get_data(path, "train")
 
 def get_test_data(path="."):
     # Load test data
     return _get_data(path, "test")
-
-def get_valid_data(path="."):
-    # Load validation data
-    return _get_data(path, "valid")
 
 def get_cv(X, y):
     # Perform cross-validation using LeaveOneGroupOut strategy
