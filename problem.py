@@ -61,6 +61,13 @@ def _get_data(path=".", split="train"):
 
     # labels
     y = pd.read_csv(os.path.join(path, "data", "y_" + split + ".csv"))
+    num_class = 13
+    y_res = np.zeros((len(y),13))
+    for i in range(len(y)):
+        y_res[i][y.iloc[i]] = 1
+
+    # Convert DataFrame to NumPy array
+    y = y_res
 
     return X, y
 
@@ -68,11 +75,10 @@ def get_train_data(path="."):
     # Load y_df from the training CSV file
     # Return data
     y_df = pd.read_csv(os.path.join(path, "data/y_train.csv"))
-    
+
     # Global variable groups
     global groups
     groups = y_df.to_numpy().ravel()
-
     return _get_data(path, "train")
 
 def get_test_data(path="."):
