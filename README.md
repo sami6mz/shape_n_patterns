@@ -38,6 +38,7 @@ You can get more information regarding this command line:
 ```bash
 ramp-test --help
 ```
+Make sure you have ran the data_processing.ipynb file beforehand to get the train/test files.
 
 ### To go further
 
